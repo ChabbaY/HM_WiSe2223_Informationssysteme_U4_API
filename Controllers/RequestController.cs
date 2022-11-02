@@ -7,58 +7,58 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
     /// <summary>
-    /// This endpoint manages all operations for customers.
+    /// This endpoint manages all operations for requests.
     /// </summary>
-    [Route("api/customers")]
+    [Route("api/requests")]
     [ApiController]
-    public class CustomerController : ControllerBase {
+    public class RequestController : ControllerBase {
         private Context context;
-        public CustomerController(Context context) {
+        public RequestController(Context context) {
             this.context = context;
         }
 
         /// <summary>
-        /// Returns all customers.
+        /// Returns all requests.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<Customer[]> GetAllCustomers() {
-            return Ok(context.Customers.ToArray());
+        public ActionResult<Request[]> GetAllRequests() {
+            return Ok(context.Requests.ToArray());
         }
 
         /// <summary>
-        /// Returns the customer with a given id.
+        /// Returns the request with a given id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Customer> GetCustomer(int id) {
-            var value = context.Customers.Where(v => v.Id == id).FirstOrDefault();
+        public ActionResult<Request> GetRequest(int id) {
+            var value = context.Requests.Where(v => v.Id == id).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
 
         /// <summary>
-        /// Adds a customer.
+        /// Adds a request.
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<Customer>> AddCustomer([FromBody] Customer value) {
+        public async Task<ActionResult<Request>> AddCustomer([FromBody] Request value) {
             if (ModelState.IsValid) {
-                //test if customer already exists
-                if (context.Customers.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //customer with id already exists, we return a conflict
+                //test if request already exists
+                if (context.Requests.Where(v => v.Id == value.Id).FirstOrDefault() != null)
+                    return Conflict(); //request with id already exists, we return a conflict
 
-                context.Customers.Add(value);
+                context.Requests.Add(value);
                 await context.SaveChangesAsync();
 
-                return Ok(value); //we return the customer
+                return Ok(value); //we return the request
             }
-            return BadRequest(ModelState); //Model is not valid -> Validation Annotation of Customer
+            return BadRequest(ModelState); //Model is not valid -> Validation Annotation of Request
         }
     }
 }

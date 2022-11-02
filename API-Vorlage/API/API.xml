@@ -4,6 +4,75 @@
         <name>API</name>
     </assembly>
     <members>
+        <member name="T:API.Controllers.AddressController">
+            <summary>
+            This endpoint manages all operations for addresses.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.AddressController.GetAllAddresses">
+            <summary>
+            Returns all addresses.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.AddressController.GetAddress(System.Int32)">
+            <summary>
+            Returns the address with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.AddressController.AddAddress(API.DataObject.Address)">
+            <summary>
+            Adds an address.
+            </summary>
+        </member>
+        <member name="T:API.Controllers.AddressInformationController">
+            <summary>
+            This endpoint manages all operations for address information.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.AddressInformationController.GetAllAddressInformation">
+            <summary>
+            Returns all address information.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.AddressInformationController.GetAddressInformation(System.Int32)">
+            <summary>
+            Returns the address information with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.AddressInformationController.AddAddressInformation(API.DataObject.AddressInformation)">
+            <summary>
+            Adds an address information.
+            </summary>
+        </member>
+        <member name="T:API.Controllers.ContactController">
+            <summary>
+            This endpoint manages all operations for contacts.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ContactController.GetAllContacts">
+            <summary>
+            Returns all contacts.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContactController.GetContact(System.Int32)">
+            <summary>
+            Returns the contact with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContactController.AddCustomer(API.DataObject.Contact)">
+            <summary>
+            Adds a contact.
+            </summary>
+        </member>
         <member name="T:API.Controllers.CustomerController">
             <summary>
             This endpoint manages all operations for customers.
@@ -27,9 +96,96 @@
             Adds a customer.
             </summary>
         </member>
-        <member name="P:API.DataObject.Customer.PhoneNumber">
+        <member name="T:API.Controllers.MaterialController">
             <summary>
-            This property is not required
+            This endpoint manages all operations for materials.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.MaterialController.GetAllMaterials">
+            <summary>
+            Returns all materials.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.MaterialController.GetMaterial(System.Int32)">
+            <summary>
+            Returns the material with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.MaterialController.AddCustomer(API.DataObject.Material)">
+            <summary>
+            Adds a material.
+            </summary>
+        </member>
+        <member name="T:API.Controllers.PositionController">
+            <summary>
+            This endpoint manages all operations for positions.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.PositionController.GetAllPositions">
+            <summary>
+            Returns all positions.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.PositionController.GetPosition(System.Int32)">
+            <summary>
+            Returns the position with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.PositionController.AddPosition(API.DataObject.Position)">
+            <summary>
+            Adds a position.
+            </summary>
+        </member>
+        <member name="T:API.Controllers.RelationController">
+            <summary>
+            This endpoint manages all operations for relations.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.RelationController.GetAllRelations">
+            <summary>
+            Returns all relations.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.RelationController.GetRelation(System.Int32)">
+            <summary>
+            Returns the relation with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.RelationController.AddCustomer(API.DataObject.Relation)">
+            <summary>
+            Adds a relation.
+            </summary>
+        </member>
+        <member name="T:API.Controllers.RequestController">
+            <summary>
+            This endpoint manages all operations for requests.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.RequestController.GetAllRequests">
+            <summary>
+            Returns all requests.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.RequestController.GetRequest(System.Int32)">
+            <summary>
+            Returns the request with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.RequestController.AddCustomer(API.DataObject.Request)">
+            <summary>
+            Adds a request.
             </summary>
         </member>
         <member name="T:API.Store.Context">
@@ -37,9 +193,44 @@
             Database context that allows us to specify the tables of a database
             </summary>
         </member>
+        <member name="P:API.Store.Context.Addresses">
+            <summary>
+            database table Addresses
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.AddressInformation">
+            <summary>
+            database table AddressInformation
+            </summary>
+        </member>
         <member name="P:API.Store.Context.Customers">
             <summary>
             database table Customers
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.Contacts">
+            <summary>
+            database table Contacts
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.Materials">
+            <summary>
+            database table Materials
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.Positions">
+            <summary>
+            database table Positions
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.Relations">
+            <summary>
+            database table Relations
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.Requests">
+            <summary>
+            database table Requests
             </summary>
         </member>
     </members>
