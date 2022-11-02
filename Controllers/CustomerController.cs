@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using API.DataObject;
 using API.Store;
@@ -65,8 +63,5 @@ namespace API.Controllers
             }
             return BadRequest(ModelState); //Model is not valid -> Validation Annotation of Customer
         }
-
-
-
     }
 }

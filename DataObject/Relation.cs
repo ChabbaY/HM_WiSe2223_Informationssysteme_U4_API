@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.DataObject {
-    public class Customer  {
-
+    public class Relation {
         [Key]
         public int Id { get; set; }
     }
