@@ -40,6 +40,11 @@ namespace API.Store {
         public DbSet<Material> Materials { get; set; }
 
         /// <summary>
+        /// database table Materials
+        /// </summary>
+        public DbSet<Object> Objects { get; set; }
+
+        /// <summary>
         /// database table Positions
         /// </summary>
         public DbSet<Position> Positions { get; set; }

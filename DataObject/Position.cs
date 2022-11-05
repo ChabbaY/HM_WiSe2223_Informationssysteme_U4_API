@@ -2,10 +2,7 @@
 using System.Data.SqlTypes;
 
 namespace API.DataObject {
-    public class Position {
-        [Key]
-        public int Id { get; set; }
-
+    public class Position : Object {
         [Required]
         public int Pos { get; set; }
 

@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.DataObject {
-    public class Request {
-        [Key]
-        public int Id { get; set; }
-
+    public class Request : Object {
         [MaxLength(100)]
         public string FromDate { get; set; }
 

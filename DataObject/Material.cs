@@ -2,10 +2,7 @@
 using System.Data.SqlTypes;
 
 namespace API.DataObject {
-    public class Material {
-        [Key]
-        public int Id { get; set; }
-
+    public class Material : Object {
         [Required]
         [MinLength(1)]
         [MaxLength(100)]

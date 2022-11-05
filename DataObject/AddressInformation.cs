@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.DataObject {
-    public class AddressInformation {
-        [Key]
-        public int Id { get; set; }
-
+    public class AddressInformation : Object {
         [Required]
         [MinLength(1)]
         [MaxLength(100)]

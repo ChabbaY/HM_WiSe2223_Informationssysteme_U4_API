@@ -9,24 +9,6 @@
             This endpoint manages all operations for addresses.
             </summary>
         </member>
-        <member name="M:API.Controllers.AddressController.GetAllAddresses">
-            <summary>
-            Returns all addresses.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.Controllers.AddressController.GetAddress(System.Int32)">
-            <summary>
-            Returns the address with a given id.
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.Controllers.AddressController.AddAddress(API.DataObject.Address)">
-            <summary>
-            Adds an address.
-            </summary>
-        </member>
         <member name="T:API.Controllers.AddressInformationController">
             <summary>
             This endpoint manages all operations for address information.
@@ -48,6 +30,29 @@
         <member name="M:API.Controllers.AddressInformationController.AddAddressInformation(API.DataObject.AddressInformation)">
             <summary>
             Adds an address information.
+            </summary>
+        </member>
+        <member name="T:API.Controllers.APIController`1">
+            <summary>
+            This endpoint manages all operations for objects.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.APIController`1.GetAllObjects">
+            <summary>
+            Returns all objects.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.APIController`1.GetObject(System.Int32)">
+            <summary>
+            Returns the object with a given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.APIController`1.AddObject(`0)">
+            <summary>
+            Adds an object.
             </summary>
         </member>
         <member name="T:API.Controllers.ContactController">
@@ -216,6 +221,11 @@
         <member name="P:API.Store.Context.Materials">
             <summary>
             database table Materials
+            </summary>
+        </member>
+        <member name="P:API.Store.Context.Objects">
+            <summary>
+            database table Positions
             </summary>
         </member>
         <member name="P:API.Store.Context.Positions">
