@@ -4,6 +4,9 @@ using System.Data.SqlTypes;
 namespace API.DataObject {
     public class Position : Object {
         [Required]
+        public int RequestId { get; set; }
+
+        [Required]
         public int Pos { get; set; }
 
         [Required]

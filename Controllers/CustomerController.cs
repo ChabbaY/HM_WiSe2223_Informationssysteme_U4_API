@@ -30,13 +30,13 @@ namespace API.Controllers {
         /// <summary>
         /// Returns the customer with a given id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cid"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{cid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Customer> GetCustomer(int id) {
-            var value = context.Customers.Where(v => v.Id == id).FirstOrDefault();
+        public ActionResult<Customer> GetCustomer([FromRoute] int cid) {
+            var value = context.Customers.Where(v => v.Id == cid).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
