@@ -7,6 +7,9 @@ namespace API.DataObject {
         public int RequestId { get; set; }
 
         [Required]
+        public int MaterialId { get; set; }
+
+        [Required]
         public int Pos { get; set; }
 
         [Required]

@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace API.DataObject {
+﻿namespace API.DataObject {
     public class Customer : Object {
-
+        public int AddressInformationId { get; set; }
     }
 }

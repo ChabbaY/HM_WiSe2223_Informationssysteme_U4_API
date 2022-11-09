@@ -2,6 +2,9 @@
 
 namespace API.DataObject {
     public class Address : Object {
+        [Required]
+        public int AdderssInformationId { get; set; }
+
         [MaxLength(100)]
         public string Street { get; set; }
         

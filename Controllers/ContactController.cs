@@ -20,7 +20,6 @@ namespace API.Controllers {
         /// <summary>
         /// Returns all contacts.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Contact[]> GetAllContacts() {
@@ -30,13 +29,12 @@ namespace API.Controllers {
         /// <summary>
         /// Returns the contact with a given id.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
+        /// <param name="cid">ContactId</param>
+        [HttpGet("{cid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Contact> GetContact(int id) {
-            var value = context.Contacts.Where(v => v.Id == id).FirstOrDefault();
+        public ActionResult<Contact> GetContact([FromRoute] int cid) {
+            var value = context.Contacts.Where(v => v.Id == cid).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
@@ -44,14 +42,17 @@ namespace API.Controllers {
         /// <summary>
         /// Adds a contact.
         /// </summary>
+        /// <param name="value">new Contact</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Contact>> AddCustomer([FromBody] Contact value) {
             if (ModelState.IsValid) {
                 //test if contact already exists
-                if (context.Contacts.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //contact with id already exists, we return a conflict
+                if (context.Contacts.Where(v => v.Id == value.Id).FirstOrDefault() != null) {
+                    ModelState.AddModelError("validationError", "Contact already exits");
+                    return Conflict(ModelState); //contact with id already exists, we return a conflict
+                }
 
                 context.Contacts.Add(value);
                 await context.SaveChangesAsync();

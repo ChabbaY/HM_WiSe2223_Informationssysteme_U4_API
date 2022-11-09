@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
     /// <summary>
-    /// This endpoint manages all operations for addresses.
+    /// This endpoint manages all operations for addresses for one addressinformation.
     /// </summary>
-    [Route("api/adresses")]
+    [Route("api/addressinformation/{aid}/adresses")]
     [ApiController]
     public class AddressController : ControllerBase {
         private Context context;
@@ -20,23 +20,23 @@ namespace API.Controllers {
         /// <summary>
         /// Returns all addresses.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="aid">AdressInformationId</param>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<Address[]> GetAllAddresses() {
-            return Ok(context.Addresses.ToArray());
+        public ActionResult<Address[]> GetAllAddresses([FromRoute] int aid) {
+            return Ok(context.Addresses.Where(v => v.AdderssInformationId == aid).ToArray());
         }
 
         /// <summary>
         /// Returns the address with a given id.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="aid">AdressInformationId</param>
+        /// <param name="id">AddressId</param>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Address> GetAddress(int id) {
-            var value = context.Addresses.Where(v => v.Id == id).FirstOrDefault();
+        public ActionResult<Address> GetAddress([FromRoute] int aid, [FromRoute] int id) {
+            var value = context.Addresses.Where(v => (v.AdderssInformationId == aid) && (v.Id == id)).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
@@ -44,15 +44,27 @@ namespace API.Controllers {
         /// <summary>
         /// Adds an address.
         /// </summary>
+        /// <param name="aid">AddressInformationId</param>
+        /// <param name="value">new Address</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<Address>> AddAddress([FromBody] Address value) {
+        public async Task<ActionResult<Address>> AddAddress([FromRoute] int aid, [FromBody] Address value) {
             if (ModelState.IsValid) {
                 //test if address already exists
-                if (context.Addresses.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //address with id already exists, we return a conflict
+                if (context.Addresses.Where(v => v.Id == value.Id).FirstOrDefault() != null) {
+                    ModelState.AddModelError("validationError", "Address already exists");
+                    return Conflict(ModelState); //address with id already exists, we return a conflict
+                }
 
+                //test if referenced address information exists
+                if (context.AddressInformation.Any(a => a.Id == aid) is false)
+                {
+                    ModelState.AddModelError("validationError", "AddressInformation not found");
+                    return NotFound(ModelState);
+                }
+
+                value.AdderssInformationId = aid; // set reference
                 context.Addresses.Add(value);
                 await context.SaveChangesAsync();
 

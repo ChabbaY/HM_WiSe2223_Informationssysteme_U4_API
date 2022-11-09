@@ -20,7 +20,6 @@ namespace API.Controllers {
         /// <summary>
         /// Returns all customers.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Customer[]> GetAllCustomers() {
@@ -30,8 +29,7 @@ namespace API.Controllers {
         /// <summary>
         /// Returns the customer with a given id.
         /// </summary>
-        /// <param name="cid"></param>
-        /// <returns></returns>
+        /// <param name="cid">CustomerId</param>
         [HttpGet("{cid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,14 +42,17 @@ namespace API.Controllers {
         /// <summary>
         /// Adds a customer.
         /// </summary>
+        /// <param name="value">new Customer</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Customer>> AddCustomer([FromBody] Customer value) {
             if (ModelState.IsValid) {
                 //test if customer already exists
-                if (context.Customers.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //customer with id already exists, we return a conflict
+                if (context.Customers.Where(v => v.Id == value.Id).FirstOrDefault() != null) {
+                    ModelState.AddModelError("validationError", "Customer already exists");
+                    return Conflict(ModelState); //customer with id already exists, we return a conflict
+                }
 
                 context.Customers.Add(value);
                 await context.SaveChangesAsync();

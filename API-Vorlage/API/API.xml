@@ -6,26 +6,28 @@
     <members>
         <member name="T:API.Controllers.AddressController">
             <summary>
-            This endpoint manages all operations for addresses.
+            This endpoint manages all operations for addresses for one addressinformation.
             </summary>
         </member>
-        <member name="M:API.Controllers.AddressController.GetAllAddresses">
+        <member name="M:API.Controllers.AddressController.GetAllAddresses(System.Int32)">
             <summary>
             Returns all addresses.
             </summary>
-            <returns></returns>
+            <param name="aid">AdressInformationId</param>
         </member>
-        <member name="M:API.Controllers.AddressController.GetAddress(System.Int32)">
+        <member name="M:API.Controllers.AddressController.GetAddress(System.Int32,System.Int32)">
             <summary>
             Returns the address with a given id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="aid">AdressInformationId</param>
+            <param name="id">AddressId</param>
         </member>
-        <member name="M:API.Controllers.AddressController.AddAddress(API.DataObject.Address)">
+        <member name="M:API.Controllers.AddressController.AddAddress(System.Int32,API.DataObject.Address)">
             <summary>
             Adds an address.
             </summary>
+            <param name="aid">AddressInformationId</param>
+            <param name="value">new Address</param>
         </member>
         <member name="T:API.Controllers.AddressInformationController">
             <summary>
@@ -36,19 +38,18 @@
             <summary>
             Returns all address information.
             </summary>
-            <returns></returns>
         </member>
         <member name="M:API.Controllers.AddressInformationController.GetAddressInformation(System.Int32)">
             <summary>
             Returns the address information with a given id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="aid">AddressInformationId</param>
         </member>
         <member name="M:API.Controllers.AddressInformationController.AddAddressInformation(API.DataObject.AddressInformation)">
             <summary>
             Adds an address information.
             </summary>
+            <param name="value">new AddressInformation</param>
         </member>
         <member name="T:API.Controllers.ContactController">
             <summary>
@@ -82,19 +83,18 @@
             <summary>
             Returns all customers.
             </summary>
-            <returns></returns>
         </member>
         <member name="M:API.Controllers.CustomerController.GetCustomer(System.Int32)">
             <summary>
             Returns the customer with a given id.
             </summary>
-            <param name="cid"></param>
-            <returns></returns>
+            <param name="cid">CustomerId</param>
         </member>
         <member name="M:API.Controllers.CustomerController.AddCustomer(API.DataObject.Customer)">
             <summary>
             Adds a customer.
             </summary>
+            <param name="value">new Customer</param>
         </member>
         <member name="T:API.Controllers.MaterialController">
             <summary>
@@ -105,42 +105,43 @@
             <summary>
             Returns all materials.
             </summary>
-            <returns></returns>
         </member>
         <member name="M:API.Controllers.MaterialController.GetMaterial(System.Int32)">
             <summary>
             Returns the material with a given id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="mid">MaterialId</param>
         </member>
         <member name="M:API.Controllers.MaterialController.AddCustomer(API.DataObject.Material)">
             <summary>
             Adds a material.
             </summary>
+            <param name="value">new Material</param>
         </member>
         <member name="T:API.Controllers.PositionController">
             <summary>
-            This endpoint manages all operations for positions.
+            This endpoint manages all operations for positions for one request.
             </summary>
         </member>
-        <member name="M:API.Controllers.PositionController.GetAllPositions">
+        <member name="M:API.Controllers.PositionController.GetAllPositions(System.Int32)">
             <summary>
             Returns all positions.
             </summary>
-            <returns></returns>
+            <param name="rid"></param>
         </member>
-        <member name="M:API.Controllers.PositionController.GetPosition(System.Int32)">
+        <member name="M:API.Controllers.PositionController.GetPosition(System.Int32,System.Int32)">
             <summary>
             Returns the position with a given id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="rid">RequestId</param>
+            <param name="pid">PositionId</param>
         </member>
-        <member name="M:API.Controllers.PositionController.AddPosition(API.DataObject.Position)">
+        <member name="M:API.Controllers.PositionController.AddPosition(System.Int32,API.DataObject.Position)">
             <summary>
             Adds a position.
             </summary>
+            <param name="rid">RequestId</param>
+            <param name="value">new Position</param>
         </member>
         <member name="T:API.Controllers.RelationController">
             <summary>
@@ -174,22 +175,20 @@
             <summary>
             Returns all requests.
             </summary>
-            <returns></returns>
         </member>
         <member name="M:API.Controllers.RequestController.GetRequest(System.Int32,System.Int32)">
             <summary>
             Returns the request with a given id.
             </summary>
-            <param name="cid"></param>
-            <param name="rid"></param>
-            <returns></returns>
+            <param name="cid">CustomerId</param>
+            <param name="rid">RequestId</param>
         </member>
         <member name="M:API.Controllers.RequestController.AddRequest(System.Int32,API.DataObject.Request)">
             <summary>
             Adds a request.
             </summary>
-            <param name="cid"></param>
-            <param name="value"></param>
+            <param name="cid">CustomerId</param>
+            <param name="value">new Request</param>
         </member>
         <member name="T:API.Store.Context">
             <summary>

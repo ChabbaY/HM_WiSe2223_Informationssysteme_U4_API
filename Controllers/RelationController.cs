@@ -20,7 +20,6 @@ namespace API.Controllers {
         /// <summary>
         /// Returns all relations.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Relation[]> GetAllRelations() {
@@ -30,13 +29,12 @@ namespace API.Controllers {
         /// <summary>
         /// Returns the relation with a given id.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
+        /// <param name="rid">RelationId</param>
+        [HttpGet("{rid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Relation> GetRelation(int id) {
-            var value = context.Relations.Where(v => v.Id == id).FirstOrDefault();
+        public ActionResult<Relation> GetRelation([FromRoute] int rid) {
+            var value = context.Relations.Where(v => v.Id == rid).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
@@ -44,14 +42,31 @@ namespace API.Controllers {
         /// <summary>
         /// Adds a relation.
         /// </summary>
+        /// <param name="value">new Relation</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Relation>> AddCustomer([FromBody] Relation value) {
             if (ModelState.IsValid) {
                 //test if relation already exists
-                if (context.Relations.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //relation with id already exists, we return a conflict
+                if (context.Relations.Where(v => v.Id == value.Id).FirstOrDefault() != null) {
+                    ModelState.AddModelError("validationError", "Relation already exists");
+                    return Conflict(ModelState); //relation with id already exists, we return a conflict
+                }
+
+                //test if referenced customer exists
+                if (context.Customers.Any(c => c.Id == value.CustomerId) is false)
+                {
+                    ModelState.AddModelError("validationError", "Customer not found");
+                    return NotFound(ModelState);
+                }
+
+                //test if referenced contact exists
+                if (context.Contacts.Any(c => c.Id == value.ContactId) is false)
+                {
+                    ModelState.AddModelError("validationError", "Contact not found");
+                    return NotFound(ModelState);
+                }
 
                 context.Relations.Add(value);
                 await context.SaveChangesAsync();

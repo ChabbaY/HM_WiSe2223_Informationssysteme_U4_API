@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using API.DataObject;
 using API.Store;
@@ -21,7 +20,6 @@ namespace API.Controllers {
         /// <summary>
         /// Returns all requests.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Request[]> GetAllRequests([FromRoute] int cid) {
@@ -31,9 +29,8 @@ namespace API.Controllers {
         /// <summary>
         /// Returns the request with a given id.
         /// </summary>
-        /// <param name="cid"></param>
-        /// <param name="rid"></param>
-        /// <returns></returns>
+        /// <param name="cid">CustomerId</param>
+        /// <param name="rid">RequestId</param>
         [HttpGet("{rid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,8 +43,8 @@ namespace API.Controllers {
         /// <summary>
         /// Adds a request.
         /// </summary>
-        /// <param name="cid"></param>
-        /// <param name="value"></param>
+        /// <param name="cid">CustomerId</param>
+        /// <param name="value">new Request</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -55,14 +52,18 @@ namespace API.Controllers {
             if (ModelState.IsValid) {
                 //test if request already exists
                 if (context.Requests.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //request with id already exists, we return a conflict
+                {
+                    ModelState.AddModelError("validationError", "Request already exists");
+                    return Conflict(ModelState); //request with id already exists, we return a conflict
+                }
 
+                //test if referenced customer exists
                 if (context.Customers.Any(c => c.Id == cid) is false) {
                     ModelState.AddModelError("validationError", "Customer not found");
                     return NotFound(ModelState);
                 }
 
-                value.CustomerId = cid;
+                value.CustomerId = cid; // set reference
                 context.Requests.Add(value);
                 await context.SaveChangesAsync();
 

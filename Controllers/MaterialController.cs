@@ -23,7 +23,6 @@ namespace API.Controllers
         /// <summary>
         /// Returns all materials.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<Material[]> GetAllMaterials()
@@ -34,14 +33,13 @@ namespace API.Controllers
         /// <summary>
         /// Returns the material with a given id.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
+        /// <param name="mid">MaterialId</param>
+        [HttpGet("{mid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Material> GetMaterial(int id)
+        public ActionResult<Material> GetMaterial(int mid)
         {
-            var value = context.Materials.Where(v => v.Id == id).FirstOrDefault();
+            var value = context.Materials.Where(v => v.Id == mid).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
@@ -49,6 +47,7 @@ namespace API.Controllers
         /// <summary>
         /// Adds a material.
         /// </summary>
+        /// <param name="value">new Material</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -57,8 +56,10 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
                 //test if material already exists
-                if (context.Materials.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //material with id already exists, we return a conflict
+                if (context.Materials.Where(v => v.Id == value.Id).FirstOrDefault() != null) {
+                    ModelState.AddModelError("validationError", "Material already exists");
+                    return Conflict(ModelState); //material with id already exists, we return a conflict
+                }
 
                 context.Materials.Add(value);
                 await context.SaveChangesAsync();

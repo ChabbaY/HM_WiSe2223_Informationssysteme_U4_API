@@ -20,7 +20,6 @@ namespace API.Controllers {
         /// <summary>
         /// Returns all address information.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<AddressInformation[]> GetAllAddressInformation() {
@@ -30,13 +29,12 @@ namespace API.Controllers {
         /// <summary>
         /// Returns the address information with a given id.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
+        /// <param name="aid">AddressInformationId</param>
+        [HttpGet("{aid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<AddressInformation> GetAddressInformation(int id) {
-            var value = context.AddressInformation.Where(v => v.Id == id).FirstOrDefault();
+        public ActionResult<AddressInformation> GetAddressInformation([FromRoute] int aid) {
+            var value = context.AddressInformation.Where(v => v.Id == aid).FirstOrDefault();
             if (value == null) return NotFound();
             return Ok(value);
         }
@@ -44,14 +42,17 @@ namespace API.Controllers {
         /// <summary>
         /// Adds an address information.
         /// </summary>
+        /// <param name="value">new AddressInformation</param>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<AddressInformation>> AddAddressInformation([FromBody] AddressInformation value) {
             if (ModelState.IsValid) {
                 //test if address information already exists
-                if (context.AddressInformation.Where(v => v.Id == value.Id).FirstOrDefault() != null)
-                    return Conflict(); //address information with id already exists, we return a conflict
+                if (context.AddressInformation.Where(v => v.Id == value.Id).FirstOrDefault() != null) {
+                    ModelState.AddModelError("validationError", "AddressInformation already exists");
+                    return Conflict(ModelState); //address information with id already exists, we return a conflict
+                }
 
                 context.AddressInformation.Add(value);
                 await context.SaveChangesAsync();
