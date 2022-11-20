@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.DataObject {
-    public class Request : Object {
+    public class Request {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public int CustomerId { get; set; }
 

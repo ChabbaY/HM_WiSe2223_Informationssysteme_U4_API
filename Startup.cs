@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using API.Store;
 using Microsoft.AspNetCore.Builder;
@@ -53,17 +52,61 @@ namespace API {
             });
 
             //Initialize Data
-            if(context.Customers.Where(c => c.Id == 1).FirstOrDefault() == null) {
-                context.Customers.Add(new DataObject.Customer() {});
-                context.Customers.Add(new DataObject.Customer() {});
-                context.Customers.Add(new DataObject.Customer() {});
-                context.Customers.Add(new DataObject.Customer() {});
-                context.Customers.Add(new DataObject.Customer() {});
-                context.Customers.Add(new DataObject.Customer() {});
-                context.SaveChanges();
-            }
-
-
+            context.AddressInformation.Add(new DataObject.AddressInformation() {//1
+                Title = "Mr",
+                Name = "Bean"
+            });
+            context.AddressInformation.Add(new DataObject.AddressInformation() {//2
+                Title = "Mr",
+                Name = "Torsten Zimmer",
+                Email = "torsten.zimmer@hm.edu"
+            });
+            context.Addresses.Add(new DataObject.Address() {//1
+                AdderssInformationId = 1,
+                Street = "Main Avenue",
+                House_Nr = "1",
+                Postcode = "12345",
+                City = "City",
+                Country = "Germany",
+                Region  ="Bavaria",
+                Timezone = "UTC+1"
+            });
+            context.Addresses.Add(new DataObject.Address() {//2
+                AdderssInformationId = 2,
+                Street = "Main Avenue",
+                House_Nr = "1",
+                Postcode = "67890",
+                City = "London",
+                Country = "England"
+            });
+            context.Customers.Add(new DataObject.Customer() {//1
+                AddressInformationId=1
+            });
+            context.Contacts.Add(new DataObject.Contact() {//1
+                AddressInformationId=2
+            });
+            context.Relations.Add(new DataObject.Relation() {//1
+                CustomerId=1,
+                ContactId=1,
+                Comment="nothing to comment on"
+            });
+            context.Requests.Add(new DataObject.Request() {//1
+                CustomerId=1,
+                FromDate="2022/11/10",
+                UntilDate="2022/12/10"
+            });
+            context.Materials.Add(new DataObject.Material() {//1
+                Name = "Iron",
+                Price = 5
+            });
+            context.Positions.Add(new DataObject.Position() {//1
+                RequestId = 1,
+                MaterialId = 1,
+                Pos = 1,
+                Count = 20
+            });
+            context.SaveChanges();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {

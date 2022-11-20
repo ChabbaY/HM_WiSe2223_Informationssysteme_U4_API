@@ -9,7 +9,7 @@ namespace API.Controllers {
     /// <summary>
     /// This endpoint manages all operations for addresses for one addressinformation.
     /// </summary>
-    [Route("api/addressinformation/{aid}/adresses")]
+    [Route("api/addressinformation/{aid}/addresses")]
     [ApiController]
     public class AddressController : ControllerBase {
         private Context context;

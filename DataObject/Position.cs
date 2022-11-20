@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Data.SqlTypes;
 
 namespace API.DataObject {
-    public class Position : Object {
+    public class Position {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public int RequestId { get; set; }
 
@@ -13,6 +15,6 @@ namespace API.DataObject {
         public int Pos { get; set; }
 
         [Required]
-        public SqlMoney Count { get; set; }
+        public double Count { get; set; }
     }
 }
